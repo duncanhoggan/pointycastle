@@ -39,19 +39,15 @@ As of the last release, the following algorithms are implemented:
   * MD2
   * MD4
   * MD5
-  * RIPEMD-128
-  * RIPEMD-160
-  * RIPEMD-256
-  * RIPEMD-320
+  * RIPEMD-128|160|256|320
   * SHA-1
-  * SHA-224
-  * SHA-256
-  * SHA-3
-  * SHA-384
-  * SHA-512
-  * SHA-512/t
+  * SHA-224|256|384|512
+  * SHA-512/t (t=8 to 376 and 392 to 504 in multiples of 8)
+  * Keccak-224|256|384|512*
   * Tiger
   * Whirlpool
+
+*_Keccak is currently implemented as SHA3Digest._
 
 **MACs:**
   * HMAC
@@ -123,29 +119,6 @@ void main() {
   Digest sha256 = new Digest("SHA-256");
   // or
   KeyDerivator derivator = new KeyDerivator("SHA-1/HMAC/PBKDF2");
-}
-```
-
-## Without dart:mirrors or package:reflectable (Flutter)
-
-Because the registry uses reflectable to register all imported algorithm classes
-and reflectable imports `dart:mirrors`, using the registry depends on the ability
-to import mirrors.  Since the [Flutter](https://flutter.io) frame work
-[doesn't allow using dart:mirrors](https://github.com/flutter/flutter/issues/1150),
-it's not possible to use the registry with Flutter.
-
-The way to use Pointy Castle in Flutter is the way explained in the previous
-section.  However, there is a utility library that exports all available
-algorithms at once.
-
-```dart
-import "package:pointycastle/export.dart";
-
-void main() {
-  Digest sha256 = new SHA256Digest();
-  // or
-  KeyDerivator derivator = new PBKDF2KeyDerivator(
-      new HMac(new SHA1Digest(), 64));
 }
 ```
 
